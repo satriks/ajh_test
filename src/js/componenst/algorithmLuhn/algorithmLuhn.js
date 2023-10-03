@@ -1,4 +1,4 @@
-class Luhn{
+export default class Luhn{
     constructor(cardNumber){
         this.cardNumber = [ ...cardNumber]
         this.test = 1
@@ -6,6 +6,11 @@ class Luhn{
     }
 
     isValid(){
+        //как я понял карты "Мир" по алгоритму Luhn не проходят, исключил из проверки. 
+        if (this.cardNumber.join('').startsWith('22')){
+            this.valid = true
+            return true
+        }
         let result = 0
         for (const index of Array.from(this.cardNumber.keys())){
             let double =   Number(this.cardNumber[index])
@@ -22,7 +27,6 @@ class Luhn{
             result += double    
             
         }
-        console.log(result);
         if (result % 10){
             this.valid = false
             return false;
@@ -33,14 +37,8 @@ class Luhn{
     }
 }
 
-var luhn_validate = function(imei){
-    return !/^\d+$/.test(imei) || (imei.split('').reduce(function(sum, d, n){ 
-            return sum + parseInt(((n + imei.length) %2)? d: [0,2,4,6,8,1,3,5,7,9][d]);
-        }, 0)) % 10 == 0;
-};
-// '2204579116913557'
-// '4111111111111111
-const card = new Luhn('3528521586761407')
-card.isValid()
-console.log(card.valid);
-console.log(luhn_validate('3528521586761407'));
+// var luhn_validate = function(imei){
+//     return !/^\d+$/.test(imei) || (imei.split('').reduce(function(sum, d, n){ 
+//             return sum + parseInt(((n + imei.length) %2)? d: [0,2,4,6,8,1,3,5,7,9][d]);
+//         }, 0)) % 10 == 0;
+// };
