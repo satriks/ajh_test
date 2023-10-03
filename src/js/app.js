@@ -1,3 +1,3 @@
-// import './componenst/algorithmLuhn/algorithmLuhn'
-// import './componenst/validPaySistem/PaySistem'
-import './componenst/DomControl'
+import DOMControl from './componenst/DomControl'
+
+const widget = new DOMControl() //eslint-disable-line

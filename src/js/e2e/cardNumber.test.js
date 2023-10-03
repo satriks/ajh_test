@@ -11,7 +11,7 @@ describe('Page start', () => {
       devtools: false
     })
     page = await browser.newPage()
-  })
+  }, 30000)
 
   test('check card number valid ', async () => {
     await page.goto('http://localhost:9000')

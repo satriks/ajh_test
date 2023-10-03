@@ -1,7 +1,7 @@
 import Luhn from './algorithmLuhn/algorithmLuhn'
 import PaySistem from './validPaySistem/PaySistem'
 
-class DOMControl {
+export default class DOMControl {
   constructor () {
     this.form = document.querySelector('.card__form')
     this.input = document.querySelector('.card__number')
@@ -27,21 +27,21 @@ class DOMControl {
           case 'mir':
             this.mir.classList.remove('not-valid')
             this.input.classList.add('input-valid')
-
-            break
+            return
           case 'visa':
             this.visa.classList.remove('not-valid')
             this.input.classList.add('input-valid')
-            break
+            return
           case 'mastercard':
             this.mastercard.classList.remove('not-valid')
             this.input.classList.add('input-valid')
-            break
+            return
 
           default:
             this.input.classList.add('input-not-valid')
-            break
         }
+      } else {
+        this.input.classList.add('input-not-valid')
       }
     }
   }

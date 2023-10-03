@@ -1,4 +1,7 @@
 module.exports = {
   // preset: 'ts-jest',
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+  // modulePathIgnorePatterns: ['e2e'],
+  moduleFileExtensions: ['js', 'json', 'html']
+
 }
