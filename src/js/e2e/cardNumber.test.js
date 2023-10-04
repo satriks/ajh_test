@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
 import { fork } from 'child_process';
 
-jest.setTimeout(60000); //
+jest.setTimeout(50000); //
 
 describe('Page start', () => {
   let browser = null;
@@ -21,7 +21,7 @@ describe('Page start', () => {
     });
 
     browser = await puppeteer.launch({
-           headless: false,
+
     });
     page = await browser.newPage();
   });
@@ -56,6 +56,6 @@ describe('Page start', () => {
 
   afterAll(async () => {
     await browser.close()
-    server.kill();
+    await server.kill();
   });
 });
