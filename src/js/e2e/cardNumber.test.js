@@ -1,17 +1,30 @@
 import puppeteer from 'puppeteer'
+import { fork } from 'child_process';
+
+jest.setTimeout(60000); //
 
 describe('Page start', () => {
-  let browser
-  let page
+  let browser = null;
+  let page = null;
+  let server = null;
+  const baseUrl = 'http://localhost:9000';
 
   beforeAll(async () => {
+    server = fork(`${__dirname}/e2e.server.js`);
+    await new Promise((resolve, reject) => {
+      server.on('error', reject);
+      server.on('message', (message) => {
+        if (message === 'ok') {
+          resolve();
+        }
+      });
+    });
+
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: false
-    })
-    page = await browser.newPage()
-  }, 30000)
+           headless: false,
+    });
+    page = await browser.newPage();
+  });
 
   test('check card number valid ', async () => {
     await page.goto('http://localhost:9000')
@@ -25,7 +38,7 @@ describe('Page start', () => {
     await submit.click()
 
     expect(await page.$('.input-valid')).toBeTruthy()
-  }, 30000)
+  });
 
   test('check card number invalid ', async () => {
     await page.goto('http://localhost:9000')
@@ -39,9 +52,10 @@ describe('Page start', () => {
     await submit.click()
 
     expect(await page.$('.input-not-valid')).toBeTruthy()
-  }, 30000)
+  });
 
   afterAll(async () => {
     await browser.close()
-  })
-})
+    server.kill();
+  });
+});
